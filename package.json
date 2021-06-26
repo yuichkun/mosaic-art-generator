@@ -4,7 +4,8 @@
   "description": "This generates mosaic-art with given images.",
   "main": "index.js",
   "scripts": {
-    "resize": "node ./src/resize"
+    "resize": "node ./src/resize",
+    "prepare": "node ./src/prepare"
   },
   "author": "Yuichi Yogo",
   "license": "MIT",

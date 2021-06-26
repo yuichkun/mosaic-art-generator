@@ -3,9 +3,9 @@ const { join } = require('path')
 
 const pathToPixelMapStore = join(process.cwd(), 'data', 'material-images-store.json')
 
-function saveMaterialPixelInfo(imgName, pixel) {
+function saveMaterialPixelInfo(imgName, pixelJson) {
   const store = getStore()
-  store[imgName] = pixel.toJson()
+  store[imgName] = pixelJson
   fs.writeFileSync(pathToPixelMapStore, JSON.stringify(store, null, 2), 'utf-8')
   console.log('Successfully saved store:', store)
 }

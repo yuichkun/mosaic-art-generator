@@ -15,7 +15,8 @@ async function analyze(pathToImage) {
     const b = rawArray[i+2]
     pixels.push(new Pixel(r, g, b))
   }
-  console.log('avg Pixel', reduceAvgPixel(pixels))
+  const avgPixel = reduceAvgPixel(pixels)
+  return avgPixel
 }
 
 
