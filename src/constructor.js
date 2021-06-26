@@ -46,7 +46,7 @@ async function stichMaterialImages(positionedImages) {
     wipImage = sharp(outputPath)
     doneCount += BATCH_SIZE
   }
-
+  return wipImage
 }
 
 module.exports = {
