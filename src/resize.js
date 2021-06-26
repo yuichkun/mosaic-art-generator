@@ -16,16 +16,16 @@ async function resize() {
     console.log(`Done Resizing. Output @ ${outputPath}`)
   }
 
-  // console.log('Getting the list of target images...')
-  // const originalTargetImages = fs.readdirSync(imagePaths.targetImages.original).filter(f => f !== '.keep')
-  // console.log('Target Images:', originalTargetImages)
-  // for (const targetImage of originalTargetImages) {
-  //   const inputPath = join(imagePaths.targetImages.original, targetImage)
-  //   const outputPath = join(imagePaths.targetImages.compressed, targetImage)
-  //   console.log(`Start Resizing for ${inputPath}`)
-  //   await sharp(inputPath).resize(config.targetImageResolution).jpeg().toFile(outputPath)
-  //   console.log(`Done Resizing. Output @ ${outputPath}`)
-  // }
+  console.log('Getting the list of target images...')
+  const originalTargetImages = fs.readdirSync(imagePaths.targetImages.original).filter(f => f !== '.keep')
+  console.log('Target Images:', originalTargetImages)
+  for (const targetImage of originalTargetImages) {
+    const inputPath = join(imagePaths.targetImages.original, targetImage)
+    const outputPath = join(imagePaths.targetImages.compressed, targetImage)
+    console.log(`Start Resizing for ${inputPath}`)
+    await sharp(inputPath).resize(config.targetImageResolution).jpeg().toFile(outputPath)
+    console.log(`Done Resizing. Output @ ${outputPath}`)
+  }
 }
 
 resize()
