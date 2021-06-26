@@ -3,6 +3,8 @@
 material_images/*
 target_images/*
 
+playground/*
+
 # Logs
 logs
 *.log
