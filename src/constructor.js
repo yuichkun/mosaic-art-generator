@@ -35,34 +35,21 @@ class PositionedImage {
 async function stichMaterialImages(positionedImages) {
   const compositeOptions = positionedImages.map(pi => pi.toCompositeOptions())
 
-  const BATCH_SIZE = 40
+  const BATCH_SIZE = 80
   let doneCount = 0
 
   let wipImage = createBaseImage()
   while (doneCount <= compositeOptions.length) {
-    const outputPath = `./playground/tmp/${doneCount}.jpg`
+    const outputPath = `./tmp/${doneCount}.jpg`
     await wipImage.composite(compositeOptions.slice(doneCount, doneCount+BATCH_SIZE)).toFile(outputPath)
 
     wipImage = sharp(outputPath)
     doneCount += BATCH_SIZE
   }
-  
+
 }
 
-
-
-// const positionedImages = []
-// const BLOCK_SIZE = 40
-// for (let top = 0; top < 1080; top += BLOCK_SIZE) {
-//   for (let left = 0; left < 1920; left += BLOCK_SIZE) {
-//     const i = Math.floor(Math.random() * 3) + 1
-//     positionedImages.push(new PositionedImage(`./playground/${i}.jpg`, top, left))
-//   }
-// }
-
-// async function main() {
-//   (await stichMaterialImages(positionedImages))
-//     // .toFile('./playground/hoge.jpg')
-// }
-
-// main()
+module.exports = {
+  stichMaterialImages,
+  PositionedImage
+}

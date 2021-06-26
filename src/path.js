@@ -1,3 +1,4 @@
+const fs = require('fs')
 const { join } = require('path')
 
 const ORIGINAL_PATH = 'original'
@@ -11,7 +12,15 @@ function genPathsFor(kind) {
   }
 }
 
+function getListOfCompressedMaterialImages() {
+  const pathToDir = genPathsFor('material_images').compressed
+  return fs.readdirSync(pathToDir)
+    .filter(f => f !== '.keep')
+    .map(f => join(pathToDir, f))
+}
+
 module.exports = {
   targetImages: genPathsFor('target_images'),
-  materialImages: genPathsFor('material_images')
+  materialImages: genPathsFor('material_images'),
+  getListOfCompressedMaterialImages
 }

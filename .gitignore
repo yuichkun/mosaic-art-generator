@@ -3,6 +3,7 @@
 material_images/*
 target_images/*
 data/*
+tmp/*.jpg
 
 playground/*
 
