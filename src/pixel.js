@@ -4,6 +4,14 @@ class Pixel {
     this.g = g
     this.b = b
   }
+
+  toJson() {
+    return {
+      r: this.r,
+      g: this.g,
+      b: this.b
+    }
+  }
 }
 
 function reduceAvgPixel(pixels) {
