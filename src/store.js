@@ -23,5 +23,6 @@ function getStore() {
 }
 
 module.exports = {
-  saveMaterialPixelInfo
+  saveMaterialPixelInfo,
+  getStore
 }
