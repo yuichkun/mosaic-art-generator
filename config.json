@@ -4,5 +4,6 @@
   "targetImageResolution": {
     "width": 1920,
     "height": 1080
-  }
+  },
+  "colorConstraints": [5, 20, 100, 250, 9999999]
 }

@@ -1,6 +1,6 @@
 const { join } = require('path')
 const { constructMosaicImage } = require('./constructor')
-const { targetImageName, targetImageResolution, materialImageResolutionCandidates } = require('../config.json')
+const { targetImageName, targetImageResolution, materialImageResolutionCandidates, colorConstraints } = require('../config.json')
 
 
 async function go() {
@@ -8,17 +8,18 @@ async function go() {
   console.time('entire construction')
   for (const materialImageResolution of materialImageResolutionCandidates) {
     for (const displayMaterialResolution of materialImageResolutionCandidates) {
-      const outputFile = join(process.cwd(), 'data', `${i}_${materialImageResolution}_done.jpg`)
-      await constructMosaicImage({
-        targetImageName,
-        targetImageResolution,
-        outputFile,
-        displayMaterialResolution,
-        materialImageResolution,
-        // TODO: manipulate
-        colorLimit: 30,
-      })
-      i++
+      for (const colorLimit of colorConstraints) {
+        const outputFile = join(process.cwd(), 'data', `${i}_${materialImageResolution}_${displayMaterialResolution}_${colorLimit}_done.jpg`)
+        await constructMosaicImage({
+          targetImageName,
+          targetImageResolution,
+          outputFile,
+          displayMaterialResolution,
+          materialImageResolution,
+          colorLimit
+        })
+        i++
+      }
     }
   }
   console.timeEnd('entire construction')
