@@ -4,6 +4,7 @@
   "description": "This generates mosaic-art with given images.",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/app.js",
     "resize": "node ./src/resize",
     "prepare": "node ./src/prepare"
   },
