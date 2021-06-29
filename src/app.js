@@ -6,9 +6,9 @@ const { targetImageName, targetImageResolution, materialImageResolutionCandidate
 async function go() {
   let i = 0
   console.time('entire construction')
-  for (const materialImageResolution of materialImageResolutionCandidates) {
-    for (const displayMaterialResolution of materialImageResolutionCandidates) {
-      for (const colorLimit of colorConstraints) {
+  for (const materialImageResolution of [...materialImageResolutionCandidates].reverse()) {
+    for (const colorLimit of colorConstraints) {
+      for (const displayMaterialResolution of materialImageResolutionCandidates) {
         const outputFile = join(process.cwd(), 'data', `${i}_${materialImageResolution}_${displayMaterialResolution}_${colorLimit}_done.jpg`)
         await constructMosaicImage({
           targetImageName,
