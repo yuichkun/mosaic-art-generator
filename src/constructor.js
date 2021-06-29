@@ -66,8 +66,8 @@ async function constructMosaicImage() {
 
   const pathToTargetImage = join(targetImages.compressed, targetImageName)
 
-  const RESIZED_WIDTH = targetImageResolution.width / materialImageResolution.width
-  const RESIZED_HEIGHT = targetImageResolution.height / materialImageResolution.height
+  const RESIZED_WIDTH = targetImageResolution.width / materialImageResolution
+  const RESIZED_HEIGHT = targetImageResolution.height / materialImageResolution
   const { data, info } = await sharp(pathToTargetImage)
     .resize({
       width: RESIZED_WIDTH,
@@ -98,7 +98,7 @@ async function constructMosaicImage() {
       const pixel = pixels[i]
       const fittestImageName = findFittest(materialImageStore, pixel)
       const fittestImage = join(materialImages.compressed, fittestImageName)
-      const positionedImage = new PositionedImage(fittestImage, top * materialImageResolution.height, left * materialImageResolution.width)
+      const positionedImage = new PositionedImage(fittestImage, top * materialImageResolution, left * materialImageResolution)
       positionedImages.push(positionedImage)
     }
   }

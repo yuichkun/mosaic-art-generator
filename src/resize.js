@@ -17,7 +17,8 @@ async function resize() {
     const materialImage = originalMaterialImages[i]
     const inputPath = join(imagePaths.materialImages.original, materialImage)
     const outputPath = join(imagePaths.materialImages.compressed, materialImage)
-    await sharp(inputPath).resize(config.materialImageResolution).jpeg().toFile(outputPath)
+    const BLOCK_SIZE = config.materialImageResolution
+    await sharp(inputPath).resize({ width: BLOCK_SIZE, height: BLOCK_SIZE }).jpeg().toFile(outputPath)
   }
   progress.stop()
 

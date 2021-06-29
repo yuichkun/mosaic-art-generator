@@ -1,9 +1,6 @@
 {
-  "targetImageName": "sample.jpg",
-  "materialImageResolution": {
-    "width": 40,
-    "height": 40
-  },
+  "targetImageName": "sample_2.jpg",
+  "materialImageResolution": 30,
   "targetImageResolution": {
     "width": 1920,
     "height": 1080
