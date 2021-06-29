@@ -63,6 +63,7 @@ async function stitchMaterialImages({ positionedImages, targetImageResolution })
 async function constructMosaicImage({
   targetImageName,
   targetImageResolution,
+  outputFile,
   materialImageResolution
 }) {
   const isValid = targetImageName && targetImageResolution && materialImageResolution
@@ -115,7 +116,7 @@ async function constructMosaicImage({
     targetImageResolution
   }
   console.log('Start Stitching...')
-  await (await stitchMaterialImages(opts)).toFile(join(process.cwd(), 'data', 'done.jpg'))
+  await (await stitchMaterialImages(opts)).toFile(outputFile)
   console.log('Done!')
 }
 
