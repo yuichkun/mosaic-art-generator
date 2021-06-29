@@ -59,20 +59,33 @@ async function stitchMaterialImages({ positionedImages, targetImageResolution })
   return wipImage
 }
 
+function constrainColors(store, limit) {
+  const constrainedStore = {}
+  let used = 0
+  for (const [key, value] of Object.entries(store)) {
+    used++
+    if (used <= limit) {
+      constrainedStore[key] = value
+    }
+  }
+  return constrainedStore
+}
+
 
 async function constructMosaicImage({
   targetImageName,
   targetImageResolution,
   outputFile,
   displayMaterialResolution,
-  materialImageResolution
+  materialImageResolution,
+  colorLimit
 }) {
   const isValid = targetImageName && targetImageResolution && materialImageResolution
   if (!isValid) {
     console.error('not valid options given to run', {targetImageName, targetImageResolution, materialImageResolution})
     throw new Error('not valid options given to run')
   }
-  const materialImageStore = getStore()
+  const materialImageStore = constrainColors(getStore(), colorLimit)
 
   const pathToTargetImage = join(targetImages.compressed, targetImageName)
 
