@@ -6,6 +6,10 @@ const imagePaths = require('./path')
 const config = require('../config.json')
 
 async function resize({ blockSize }) {
+  const pathToMaterialImageCompressedForThisBlockSize = imagePaths.materialImages.compressed[blockSize]
+  if (!fs.existsSync(pathToMaterialImageCompressedForThisBlockSize)) {
+    fs.mkdirSync(pathToMaterialImageCompressedForThisBlockSize)
+  }
   const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   console.time(`resize ${blockSize}`)
   console.log('Getting the list of material images...')
@@ -16,8 +20,7 @@ async function resize({ blockSize }) {
     progress.update(Number(i) / originalMaterialImages.length)
     const materialImage = originalMaterialImages[i]
     const inputPath = join(imagePaths.materialImages.original, materialImage)
-    // TODO: save image to a dedicated folder for the resolution
-    const outputPath = join(imagePaths.materialImages.compressed, materialImage)
+    const outputPath = join(pathToMaterialImageCompressedForThisBlockSize, materialImage)
     await sharp(inputPath).resize({ width: blockSize, height: blockSize }).jpeg().toFile(outputPath)
   }
   progress.stop()
