@@ -105,7 +105,7 @@ async function constructMosaicImage({
       const i = left + (top * RESIZED_WIDTH)
       const pixel = pixels[i]
       const fittestImageName = findFittest(materialImageStore, pixel)
-      const fittestImage = join(materialImages.compressed, fittestImageName)
+      const fittestImage = join(materialImages.compressed[materialImageResolution], fittestImageName)
       const positionedImage = new PositionedImage(fittestImage, top * materialImageResolution, left * materialImageResolution)
       positionedImages.push(positionedImage)
     }
