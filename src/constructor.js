@@ -1,12 +1,11 @@
 const { join } = require('path')
 const sharp = require("sharp");
 const cliProgress = require('cli-progress')
-const { targetImageResolution, targetImageName, materialImageResolution } = require('../config.json')
 const { getStore } = require('./store')
 const { targetImages, materialImages } = require('./path')
 const { Pixel } = require('./pixel')
 
-function createBaseImage() {
+function createBaseImage(targetImageResolution) {
   return sharp({
     create: {
       width: targetImageResolution.width,
@@ -37,7 +36,7 @@ class PositionedImage {
   }
 }
 
-async function stichMaterialImages(positionedImages) {
+async function stichMaterialImages({ positionedImages, targetImageResolution }) {
   const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   progress.start(1, 0)
   console.time('Stitching')
@@ -46,7 +45,7 @@ async function stichMaterialImages(positionedImages) {
   const BATCH_SIZE = 80
   let doneCount = 0
 
-  let wipImage = createBaseImage()
+  let wipImage = createBaseImage(targetImageResolution)
   while (doneCount <= compositeOptions.length) {
     progress.update(doneCount / compositeOptions.length)
     const outputPath = `./tmp/${doneCount}.jpg`
@@ -61,7 +60,16 @@ async function stichMaterialImages(positionedImages) {
 }
 
 
-async function constructMosaicImage() {
+async function constructMosaicImage({
+  targetImageName,
+  targetImageResolution,
+  materialImageResolution
+}) {
+  const isValid = targetImageName && targetImageResolution && materialImageResolution
+  if (!isValid) {
+    console.error('not valid options given to run', {targetImageName, targetImageResolution, materialImageResolution})
+    throw new Error('not valid options given to run')
+  }
   const materialImageStore = getStore()
 
   const pathToTargetImage = join(targetImages.compressed, targetImageName)
@@ -102,8 +110,12 @@ async function constructMosaicImage() {
       positionedImages.push(positionedImage)
     }
   }
+  const opts = {
+    positionedImages,
+    targetImageResolution
+  }
   console.log('Start Stitching...')
-  await (await stichMaterialImages(positionedImages)).toFile(join(process.cwd(), 'data', 'done.jpg'))
+  await (await stichMaterialImages(opts)).toFile(join(process.cwd(), 'data', 'done.jpg'))
   console.log('Done!')
 }
 

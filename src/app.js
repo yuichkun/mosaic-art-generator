@@ -1,3 +1,3 @@
 const { constructMosaicImage } = require('./constructor')
 
-constructMosaicImage()
+constructMosaicImage(require('../config.json'))
