@@ -5,13 +5,13 @@ const sharp = require('sharp')
 const imagePaths = require('./path')
 const config = require('../config.json')
 
-async function resize({ blockSize }) {
+async function resizeMaterialImages({ blockSize }) {
   const pathToMaterialImageCompressedForThisBlockSize = imagePaths.materialImages.compressed[blockSize]
   if (!fs.existsSync(pathToMaterialImageCompressedForThisBlockSize)) {
     fs.mkdirSync(pathToMaterialImageCompressedForThisBlockSize)
   }
   const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
-  console.time(`resize ${blockSize}`)
+  console.time(`resize material images ${blockSize}`)
   console.log('Getting the list of material images...')
   const originalMaterialImages = fs.readdirSync(imagePaths.materialImages.original).filter(f => f !== '.keep')
   console.log('Material Images Count:', originalMaterialImages.length)
@@ -25,6 +25,12 @@ async function resize({ blockSize }) {
   }
   progress.stop()
 
+  console.timeEnd(`resize material images ${blockSize}`)
+}
+
+async function resizeTargetImages() {
+  const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+  console.time('resize target images')
   console.log('Getting the list of target images...')
   const originalTargetImages = fs.readdirSync(imagePaths.targetImages.original).filter(f => f !== '.keep')
   console.log('Target Images Count:', originalTargetImages.length)
@@ -37,14 +43,15 @@ async function resize({ blockSize }) {
     await sharp(inputPath).resize(config.targetImageResolution).jpeg().toFile(outputPath)
   }
   progress.stop()
-  console.timeEnd(`resize ${blockSize}`)
+  console.timeEnd('resize target images')
 }
 
 async function main() {
   console.time('total resize time')
   for (const blockSize of config.materialImageResolutionCandidates) {
-    await resize({ blockSize })
+    await resizeMaterialImages({ blockSize })
   }
+  await resizeTargetImages()
   console.timeEnd('total resize time')
 }
 
