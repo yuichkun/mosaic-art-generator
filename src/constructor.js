@@ -36,7 +36,7 @@ class PositionedImage {
   }
 }
 
-async function stichMaterialImages({ positionedImages, targetImageResolution }) {
+async function stitchMaterialImages({ positionedImages, targetImageResolution }) {
   const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
   progress.start(1, 0)
   console.time('Stitching')
@@ -115,7 +115,7 @@ async function constructMosaicImage({
     targetImageResolution
   }
   console.log('Start Stitching...')
-  await (await stichMaterialImages(opts)).toFile(join(process.cwd(), 'data', 'done.jpg'))
+  await (await stitchMaterialImages(opts)).toFile(join(process.cwd(), 'data', 'done.jpg'))
   console.log('Done!')
 }
 
@@ -147,7 +147,5 @@ function calcDistance(pixelA, pixelB) {
 
 
 module.exports = {
-  stichMaterialImages,
-  PositionedImage,
   constructMosaicImage
 }
