@@ -1,5 +1,6 @@
 const { join } = require('path')
 const sharp = require("sharp");
+const cliProgress = require('cli-progress')
 const { targetImageResolution, targetImageName, materialImageResolution } = require('../config.json')
 const { getStore } = require('./store')
 const { targetImages, materialImages } = require('./path')
@@ -37,6 +38,9 @@ class PositionedImage {
 }
 
 async function stichMaterialImages(positionedImages) {
+  const progress = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+  progress.start(1, 0)
+  console.time('Stitching')
   const compositeOptions = positionedImages.map(pi => pi.toCompositeOptions())
 
   const BATCH_SIZE = 80
@@ -44,12 +48,15 @@ async function stichMaterialImages(positionedImages) {
 
   let wipImage = createBaseImage()
   while (doneCount <= compositeOptions.length) {
+    progress.update(doneCount / compositeOptions.length)
     const outputPath = `./tmp/${doneCount}.jpg`
     await wipImage.composite(compositeOptions.slice(doneCount, doneCount+BATCH_SIZE)).toFile(outputPath)
 
     wipImage = sharp(outputPath)
     doneCount += BATCH_SIZE
   }
+  progress.stop()
+  console.timeEnd('Stitching')
   return wipImage
 }
 
