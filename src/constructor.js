@@ -42,7 +42,7 @@ async function stitchMaterialImages({ positionedImages, targetImageResolution })
   console.time('Stitching')
   const compositeOptions = positionedImages.map(pi => pi.toCompositeOptions())
 
-  const BATCH_SIZE = 80
+  const BATCH_SIZE = 180
   let doneCount = 0
 
   let wipImage = createBaseImage(targetImageResolution)
@@ -64,6 +64,7 @@ async function constructMosaicImage({
   targetImageName,
   targetImageResolution,
   outputFile,
+  displayMaterialResolution,
   materialImageResolution
 }) {
   const isValid = targetImageName && targetImageResolution && materialImageResolution
@@ -106,7 +107,7 @@ async function constructMosaicImage({
       const i = left + (top * RESIZED_WIDTH)
       const pixel = pixels[i]
       const fittestImageName = findFittest(materialImageStore, pixel)
-      const fittestImage = join(materialImages.compressed[materialImageResolution], fittestImageName)
+      const fittestImage = join(materialImages.compressed[displayMaterialResolution], fittestImageName)
       const positionedImage = new PositionedImage(fittestImage, top * materialImageResolution, left * materialImageResolution)
       positionedImages.push(positionedImage)
     }
