@@ -6,12 +6,16 @@
   "scripts": {
     "start": "node ./src/app.js",
     "resize": "node ./src/resize",
-    "prepare": "node ./src/prepare"
+    "prepare": "node ./src/prepare",
+    "clean": "rimraf data/**/*.jpg data/**/*.json tmp/**/*.jpg ./material_images/**/.DS_Store ./material_images/compressed/**/*.jpeg ./material_images/compressed/**/*.jpg ./target_images/**/.DS_Store ./target_images/compressed/**/*.jpeg ./target_images/compressed/**/*.jpg"
   },
   "author": "Yuichi Yogo",
   "license": "MIT",
   "dependencies": {
     "cli-progress": "3.9.0",
     "sharp": "0.28.3"
+  },
+  "devDependencies": {
+    "rimraf": "3.0.2"
   }
 }
