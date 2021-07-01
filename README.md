@@ -1,27 +1,53 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Mosaic Art Generator](#mosaic-art-generator)
+  - [How to Use](#how-to-use)
+    - [Preparation](#preparation)
+      - [Gather 2 Kinds of Images](#gather-2-kinds-of-images)
+        - [Material Images](#material-images)
+        - [Target Images](#target-images)
+      - [Configure](#configure)
+      - [Resize](#resize)
+      - [Analyze](#analyze)
+    - [Execution](#execution)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Mosaic Art Generator
 
-TBD
-
-## Memo
-
-### Prerequisites
-
-- Target Image
-- Material Images
+## How to Use
 
 ### Preparation
 
-1. Gather Images for a target image/material images.
-1. Compress Material images to 40x40
-1. Analyze Material images
-    1. Get list of material images
-    1. For each image, calculate the average color vector
-    1. Save the calculated color vector as hashmap
-1. Analyze the Target Image
-    1. Divide the target image into blocks
-    1. For each block, calculate the average color vector
-    1. Save the calculated color vector for each block
-1. Generate
-    1. Given pre-analyzed material images and a target image,
-    1. For each block of the target image,
-    1. Calculate the fittest image for the block from the material images
+#### Gather 2 Kinds of Images
+
+##### Material Images
+
+Images by which you wish to construct the target image.
+
+Gather and place them under `./material_images/original`
+
+##### Target Images
+
+The target image that you wish to create by gathering material images.
+
+Gather and place them under `./target_images/original`
+
+#### Configure
+
+Open `./config.json` and configure `targetImageName` which is the name of one of the target files that you put in.
+
+#### Resize
+
+`npm run resize`
+
+#### Analyze
+
+`npm run prepare`
+
+### Execution
+
+`npm start` will generate images under `./data` folder.
+
